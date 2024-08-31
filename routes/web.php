@@ -21,7 +21,8 @@ Route::get('/', function () {
     return view('dashboard',[
         "title"=>"Dashboard"
     ]);
-});
+})->middleware('auth');
+
 route::resource('warga',wargacontroller::class)->middleware('auth');
 Route::resource('pengguna',UserController::class)->except('destroy','create','show','update','edit')->middleware('auth');
 Route::resource('bantuan', bantuanController::class)->middleware('auth');

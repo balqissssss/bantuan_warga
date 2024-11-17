@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bantuans', function (Blueprint $table) {
-            $table->id(); // Ini akan menghasilkan kolom id dengan tipe bigint unsigned
-            $table->foreignId('id_warga')->constrained('wargas')->onDelete('cascade'); // Pastikan tipe data sesuai
+            $table->id();
+            $table->foreignId('id_warga')->constrained('wargas')->onDelete('cascade');
             $table->decimal('total_bantuan', 15, 2);
             $table->date('tanggal');
             $table->timestamps();

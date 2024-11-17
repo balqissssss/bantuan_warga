@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="id_warga">Nama Warga</label>
                     <select id="id_warga" name="id_warga" class="form-control" disabled>
-                        @foreach($wargas as $warga)
+                        @foreach($warga as $warga)
                         <option value="{{ $warga->id }}" {{ $warga->id == $bantuan->id_warga ? 'selected' : '' }}>
                             {{ $warga->name }}
                         </option>

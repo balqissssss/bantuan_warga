@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\bantuan;
-use App\Models\warga;
+use App\Models\Bantuan;
+use App\Models\Warga;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class bantuanController extends Controller
+class BantuanController extends Controller
 {
     public function index(): View
     {
-        $data = bantuan::with('warga')->get();
+        $data = Bantuan::with('warga')->get();
         foreach ($data as $item) {
             $item->formatted_total_bantuan = 'Rp ' . number_format($item->total_bantuan, 0, ',', '.'); // Format: Rp 1.000.000
         }    
@@ -25,16 +25,16 @@ class bantuanController extends Controller
     public function create(): View|RedirectResponse
     {
         // Mengambil semua data warga dengan penghasilan di bawah 500.000
-        $wargas = warga::where('penghasilan', '<', 500000)->get();
+        $warga = Warga::where('penghasilan', '<', 500000)->get();
 
         // Jika tidak ada warga yang memenuhi syarat, tampilkan pesan
-        if ($wargas->isEmpty()) {
+        if ($warga->isEmpty()) {
             return redirect()->route('bantuan.index')->with('error', 'Tidak ada warga dengan penghasilan di bawah 500.000.');
         }
         
         return view('bantuan.index', [
             'title' => 'Tambah Data Bantuan',
-            'wargas' => $wargas // Mengirim data warga ke view
+            'warga' => $warga // Mengirim data warga ke view
         ]);
     }
 
@@ -51,7 +51,7 @@ class bantuanController extends Controller
         bantuan::create($validasi);
 
         // Update status warga
-        $warga = warga::find($request->id_warga);
+        $warga = Warga::find($request->id_warga);
         if ($warga) {
             $warga->status = 'kurang mampu'; // Status selalu diatur sebagai 'kurang mampu'
         }
@@ -61,12 +61,12 @@ class bantuanController extends Controller
 
     public function edit($id): View
     {
-        $bantuan = bantuan::findOrFail($id);
-        $wargas = warga::all(); // Mengambil semua data warga untuk dropdown
+        $bantuan = Bantuan::findOrFail($id);
+        $wargas = Warga::all(); // Mengambil semua data warga untuk dropdown
         
         return view('bantuan.edit', [
             'bantuan' => $bantuan,
-            'wargas' => $wargas,
+            'warga' => $wargas,
             'title' => 'Ubah Data Bantuan'
         ]);
     }
@@ -81,7 +81,7 @@ class bantuanController extends Controller
         $bantuan->update($request->only('total_bantuan', 'tanggal'));
 
         // Mengubah status warga
-        $warga = warga::findOrFail($bantuan->id_warga);
+        $warga = Warga::findOrFail($bantuan->id_warga);
         if ($warga->penghasilan < 500000) {
             $warga->status = 'kurang mampu';
         } else {
@@ -95,7 +95,7 @@ class bantuanController extends Controller
     public function destroy($id): RedirectResponse
     {
         // Temukan data bantuan berdasarkan ID
-        $bantuan = bantuan::findOrFail($id);
+        $bantuan = Bantuan::findOrFail($id);
         
         // Hapus data bantuan
         $bantuan->delete();

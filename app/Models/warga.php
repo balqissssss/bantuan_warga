@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class warga extends Model
+class Warga extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -14,7 +14,7 @@ class warga extends Model
     ];
     public function bantuans(): HasMany
     {
-        return $this->hasMany(bantuan::class, 'id_warga');
+        return $this->hasMany(Bantuan::class, 'id_warga');
     }
 }
 

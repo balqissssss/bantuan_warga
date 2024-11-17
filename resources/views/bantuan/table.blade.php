@@ -45,7 +45,7 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>no</th>
                         <th>Nama Warga</th>
                         <th>Total Bantuan</th>
                         <th>Tanggal Bantuan</th>
@@ -105,7 +105,7 @@
 @endsection
 
 @section('tambahScript')
-<script>
+{{-- <script>
 $(function() {
     $("#example1").DataTable({
         "responsive": true,
@@ -125,5 +125,60 @@ toastr.error("{{ $message }}");
 @if($message = Session::get('warning'))
 toastr.warning("{{ $message }}");
 @endif
-</script>
+</script> --}}
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": [
+                {
+                    "extend": "copy",
+                    "exportOptions": {
+                        "columns": ":not(:last-child)" // Mengecualikan kolom terakhir (Aksi)
+                    }
+                },
+                {
+                    "extend": "csv",
+                    "exportOptions": {
+                        "columns": ":not(:last-child)"
+                    }
+                },
+                {
+                    "extend": "excel",
+                    "exportOptions": {
+                        "columns": ":not(:last-child)"
+                    }
+                },
+                {
+                    "extend": "pdf",
+                    "exportOptions": {
+                        "columns": ":not(:last-child)"
+                    }
+                },
+                {
+                    "extend": "print",
+                    "exportOptions": {
+                        "columns": ":not(:last-child)"
+                    }
+                },
+                "colvis"
+            ]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+    
+    // Menampilkan notifikasi toastr
+    @if($message = Session::get('success'))
+    toastr.success("{{ $message }}");
+    @endif
+    @if($message = Session::get('error'))
+    toastr.error("{{ $message }}");
+    @endif
+    @if($message = Session::get('warning'))
+    toastr.warning("{{ $message }}");
+    @endif
+    </script>
+    
+
 @endsection

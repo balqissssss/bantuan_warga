@@ -19,7 +19,7 @@ class UserController extends Controller
     public function store(Request $request):RedirectResponse{
         $request->validate([
             "name"=>"required",
-            "email"=>"email:dns",
+            "email"=>"email",
             "password"=>"required"
         ]);
         $password=Hash::make($request->password);
@@ -29,6 +29,6 @@ class UserController extends Controller
 
         User::create($request->all());
 
-        return redirect()->route('pengguna.index')->with('success','Data User Berhasil Ditambahkan');
+        return redirect()->route('user.index')->with('success','Data User Berhasil Ditambahkan');
     }
 }

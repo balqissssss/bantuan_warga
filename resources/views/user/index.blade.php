@@ -20,7 +20,8 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{ route('pengguna.store') }}" method="POST">
+        <form action="{{ route('user.store') }}" method="POST">
+
             @csrf
             <div class=" card-body">
                 <div class="form-group">

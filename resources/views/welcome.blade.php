@@ -202,7 +202,7 @@
 
 
         <!-- =========================================================== -->
-        <h1 class="h3 mb-1 mt-3">
+        {{-- <h1 class="h3 mb-1 mt-3">
             <strong>Bantuan</strong> Terakhir
         </h1>
         <div class="card-body">
@@ -217,19 +217,19 @@
                 </thead>
                 <tbody>
 
-                    @foreach($databantuan as $dt)
+                    @foreach($databantuan as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $dt->Auth::user()->name }}</td>
-                        <td>{{ $dt->total }}</td>
+                        <td>{{ $databantuan->bantuan->name }}</td>
+                        <td>{{ $databantuan->total }}</td>
                         
                     </tr>
 
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
 
-        </div>
+        {{-- </div> --}}
 
 
 
